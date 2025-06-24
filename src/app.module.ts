@@ -1,7 +1,8 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JoiValidationSchema } from './config/joi.validation';
+import { LoggerMiddleware } from './middlewares/logger.middleware';
 
 @Module({
   imports: [
@@ -17,4 +18,9 @@ import { JoiValidationSchema } from './config/joi.validation';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  // Método que genera logs en cada llamada HTTP
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*path');
+  }
+}
