@@ -11,6 +11,7 @@ import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
 import { Bcrypt } from 'src/common/services/bcrypt';
+import { JwtPayload } from './interfaces/jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
@@ -63,5 +64,18 @@ export class AuthService {
     } catch (error) {
       throw new InternalServerErrorException(`Error login user: ${error}`);
     }
+  }
+
+  checkToken(user: User) {
+    return {
+      user,
+      token: this.getJwt({
+        _id: user._id,
+      }),
+    };
+  }
+
+  private getJwt(payload: JwtPayload) {
+    return this.jwtService.sign(payload);
   }
 }
