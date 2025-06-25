@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { StateModule } from './state/state.module';
 import { PlaceModule } from './place/place.module';
 import { CategoryModule } from './category/category.module';
+import { AuthorModule } from './author/author.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { CategoryModule } from './category/category.module';
     StateModule,
     PlaceModule,
     CategoryModule,
+    AuthorModule,
   ],
   controllers: [],
   providers: [],
