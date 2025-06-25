@@ -14,5 +14,6 @@ import { CommonModule } from 'src/common/common.module';
     PassportModule.register({ defaultStrategy: 'jwt' }),
     CommonModule,
   ],
+  exports: [UsersService],
 })
 export class UsersModule {}

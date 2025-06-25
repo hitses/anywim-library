@@ -5,4 +5,5 @@ export const JoiValidationSchema = joi.object({
   APP_ORIGIN: joi.string().required(),
   MONGO_URI: joi.string().required(),
   DB_NAME: joi.string().required(),
+  JWT_SECRET: joi.string().required(),
 });

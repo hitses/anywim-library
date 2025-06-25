@@ -12,8 +12,6 @@ async function bootstrap() {
   // Habilita CORS para todas las rutas de la aplicación con los orígenes permitidos
   app.enableCors({
     origin: (origin: string, callback) => {
-      console.log('Origen de la petición:', origin);
-
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {

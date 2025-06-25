@@ -5,6 +5,7 @@ import { JoiValidationSchema } from './config/joi.validation';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { UsersModule } from './users/users.module';
 import { CommonModule } from './common/common.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { CommonModule } from './common/common.module';
     }),
     UsersModule,
     CommonModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

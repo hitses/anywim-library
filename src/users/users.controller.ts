@@ -11,6 +11,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { MongoIdPipe } from 'src/config/pipes/mongo-id.pipe';
+import { Auth } from 'src/auth/decorators/auth.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -21,6 +22,7 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
+  @Auth()
   @Get()
   findAll() {
     return this.usersService.findAll();

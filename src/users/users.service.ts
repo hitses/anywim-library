@@ -35,7 +35,7 @@ export class UsersService {
         throw new BadRequestException('User already exists');
       }
 
-      throw new InternalServerErrorException('Error creating user');
+      throw new InternalServerErrorException('Error creating user', error);
     }
   }
 
