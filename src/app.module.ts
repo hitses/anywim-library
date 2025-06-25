@@ -11,6 +11,7 @@ import { PlaceModule } from './place/place.module';
 import { CategoryModule } from './category/category.module';
 import { AuthorModule } from './author/author.module';
 import { CollectionModule } from './collection/collection.module';
+import { LoanModule } from './loan/loan.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { CollectionModule } from './collection/collection.module';
     CategoryModule,
     AuthorModule,
     CollectionModule,
+    LoanModule,
   ],
   controllers: [],
   providers: [],
