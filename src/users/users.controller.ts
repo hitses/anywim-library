@@ -28,11 +28,13 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
+  @Auth()
   @Get(':id')
   findOne(@Param('id', MongoIdPipe) id: string) {
     return this.usersService.findOne(id);
   }
 
+  @Auth()
   @Patch(':id')
   update(
     @Param('id', MongoIdPipe) id: string,
@@ -41,6 +43,7 @@ export class UsersController {
     return this.usersService.update(id, updateUserDto);
   }
 
+  @Auth()
   @Delete(':id')
   remove(@Param('id', MongoIdPipe) id: string) {
     return this.usersService.remove(id);
