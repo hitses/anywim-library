@@ -7,6 +7,7 @@ import { CommonModule } from './common/common.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { StateModule } from './state/state.module';
+import { PlaceModule } from './place/place.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { StateModule } from './state/state.module';
     UserModule,
     AuthModule,
     StateModule,
+    PlaceModule,
   ],
   controllers: [],
   providers: [],
