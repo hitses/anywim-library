@@ -13,7 +13,7 @@ import { User } from './entities/user.entity';
 import { Bcrypt } from 'src/common/services/bcrypt';
 
 @Injectable()
-export class UsersService {
+export class UserService {
   constructor(
     @InjectModel(User.name)
     private readonly userModel: Model<User>,

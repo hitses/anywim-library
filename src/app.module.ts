@@ -3,8 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JoiValidationSchema } from './config/joi.validation';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
-import { UsersModule } from './users/users.module';
 import { CommonModule } from './common/common.module';
+import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -17,8 +17,8 @@ import { AuthModule } from './auth/auth.module';
     MongooseModule.forRoot(process.env.MONGO_URI!, {
       dbName: process.env.DB_NAME,
     }),
-    UsersModule,
     CommonModule,
+    UserModule,
     AuthModule,
   ],
   controllers: [],
