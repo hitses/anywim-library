@@ -10,6 +10,7 @@ import { StateModule } from './state/state.module';
 import { PlaceModule } from './place/place.module';
 import { CategoryModule } from './category/category.module';
 import { AuthorModule } from './author/author.module';
+import { CollectionModule } from './collection/collection.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { AuthorModule } from './author/author.module';
     PlaceModule,
     CategoryModule,
     AuthorModule,
+    CollectionModule,
   ],
   controllers: [],
   providers: [],

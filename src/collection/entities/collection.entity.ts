@@ -3,7 +3,7 @@ import mongoose, { Document } from 'mongoose';
 import slugify from 'slugify';
 
 @Schema({ timestamps: true })
-export class Category extends Document {
+export class Collection extends Document {
   declare _id: mongoose.Types.ObjectId;
 
   @Prop({
@@ -12,6 +12,9 @@ export class Category extends Document {
     trim: true,
   })
   name: string;
+
+  @Prop({ trim: true })
+  description: string;
 
   @Prop({
     required: true,
@@ -22,9 +25,9 @@ export class Category extends Document {
   slug: string;
 }
 
-export const CategorySchema = SchemaFactory.createForClass(Category);
+export const CollectionSchema = SchemaFactory.createForClass(Collection);
 
-CategorySchema.pre('validate', function (next) {
+CollectionSchema.pre('validate', function (next) {
   if (this.isModified('name')) this.slug = slugify(this.name);
 
   next();
