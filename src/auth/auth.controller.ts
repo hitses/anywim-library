@@ -24,7 +24,6 @@ export class AuthController {
   @Auth()
   @Get('check-token')
   checkToken(@GetUser() user: User) {
-    console.log(User);
     return this.authService.checkToken(user);
   }
 }
