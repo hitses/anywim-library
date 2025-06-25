@@ -10,7 +10,7 @@ export class Loan extends Document {
     ref: 'Book',
     required: true,
   })
-  book_id: mongoose.Types.ObjectId;
+  book: mongoose.Types.ObjectId;
 
   @Prop({
     required: true,
