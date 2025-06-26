@@ -32,3 +32,5 @@ CollectionSchema.pre('validate', function (next) {
 
   next();
 });
+
+CollectionSchema.index({ createdAt: -1 });
