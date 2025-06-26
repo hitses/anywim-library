@@ -53,14 +53,14 @@ export class Book extends Document {
     ref: 'State',
     required: true,
   })
-  state_id: mongoose.Types.ObjectId;
+  state: mongoose.Types.ObjectId;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Place',
     required: true,
   })
-  place_id: mongoose.Types.ObjectId;
+  place: mongoose.Types.ObjectId;
 
   @Prop({
     type: [mongoose.Schema.Types.ObjectId],
@@ -95,3 +95,13 @@ BookSchema.pre('validate', function (next) {
 
   next();
 });
+
+BookSchema.index({ title: 1 });
+BookSchema.index({ state: 1 });
+BookSchema.index({ place: 1 });
+BookSchema.index({ authors: 1 });
+BookSchema.index({ categories: 1 });
+BookSchema.index({ collection_id: 1 });
+BookSchema.index({ collection_id: 1, order_in_collection: 1 });
+BookSchema.index({ isLoaned: 1 });
+BookSchema.index({ createdAt: -1 });

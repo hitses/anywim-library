@@ -13,7 +13,7 @@ export class Author extends Document {
   lastname: string;
 
   @Prop({ trim: true })
-  image: string;
+  image?: string;
 
   @Prop({
     required: true,
