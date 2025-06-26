@@ -8,6 +8,8 @@ export class User extends Document {
   @Prop({
     required: true,
     unique: true,
+    trim: true,
+    lowercase: true,
   })
   username: string;
 
@@ -18,3 +20,5 @@ export class User extends Document {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.index({ username: 1 }, { unique: true });

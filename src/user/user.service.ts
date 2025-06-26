@@ -79,4 +79,8 @@ export class UserService {
   async remove(id: string) {
     return await this.userModel.findByIdAndDelete(id);
   }
+
+  async updateIndexes() {
+    await this.userModel.syncIndexes();
+  }
 }
