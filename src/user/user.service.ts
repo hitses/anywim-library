@@ -73,6 +73,6 @@ export class UserService {
     if (error.code === 11000)
       throw new BadRequestException('User already exists');
 
-    throw new InternalServerErrorException('Error updating user', error);
+    throw new InternalServerErrorException('Error in User', error);
   }
 }

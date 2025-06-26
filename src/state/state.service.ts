@@ -9,6 +9,7 @@ import { Model } from 'mongoose';
 import { State } from './entities/state.entity';
 import { CreateStateDto } from './dto/create-state.dto';
 import { UpdateStateDto } from './dto/update-state.dto';
+import slugify from 'slugify';
 
 @Injectable()
 export class StateService {
@@ -18,10 +19,8 @@ export class StateService {
   ) {}
 
   async create(createStateDto: CreateStateDto) {
-    const { name } = createStateDto;
-
     try {
-      const state = new this.stateModel({ name });
+      const state = new this.stateModel(createStateDto);
 
       return await state.save();
     } catch (error) {
@@ -42,10 +41,12 @@ export class StateService {
   }
 
   async update(id: string, updateStateDto: UpdateStateDto) {
+    const slug = slugify(updateStateDto.name!);
+
     try {
       return await this.stateModel.findOneAndUpdate(
         { _id: id },
-        { ...updateStateDto },
+        { ...updateStateDto, slug },
         { new: true },
       );
     } catch (error) {
@@ -61,6 +62,6 @@ export class StateService {
     if (error.code === 11000)
       throw new BadRequestException('State already exists');
 
-    throw new InternalServerErrorException('Error updating state', error);
+    throw new InternalServerErrorException('Error in State', error);
   }
 }

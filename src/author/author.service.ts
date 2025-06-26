@@ -1,26 +1,64 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Author } from './entities/author.entity';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
+import slugify from 'slugify';
 
 @Injectable()
 export class AuthorService {
-  create(createAuthorDto: CreateAuthorDto) {
-    return 'This action adds a new author';
+  constructor(
+    @InjectModel(Author.name)
+    private readonly authorModel: Model<Author>,
+  ) {}
+
+  async create(createAuthorDto: CreateAuthorDto) {
+    try {
+      const author = new this.authorModel(createAuthorDto);
+
+      return await author.save();
+    } catch (error) {
+      this.errorResponse(error);
+    }
   }
 
-  findAll() {
-    return `This action returns all author`;
+  async findAll() {
+    return await this.authorModel.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} author`;
+  async findOne(id: string) {
+    return await this.authorModel.findById(id);
   }
 
-  update(id: number, updateAuthorDto: UpdateAuthorDto) {
-    return `This action updates a #${id} author`;
+  async update(id: string, updateAuthorDto: UpdateAuthorDto) {
+    const fullName =
+      `${updateAuthorDto.name?.toLocaleLowerCase()} ${updateAuthorDto.lastname?.toLocaleLowerCase()}`.trim();
+    const slug = slugify(fullName);
+
+    try {
+      return await this.authorModel.findOneAndUpdate(
+        { _id: id },
+        { ...updateAuthorDto, fullName, slug },
+        { new: true },
+      );
+    } catch (error) {
+      this.errorResponse(error);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} author`;
+  async remove(id: string) {
+    return await this.authorModel.findByIdAndDelete(id);
+  }
+
+  private errorResponse(error: any) {
+    if (error.code === 11000)
+      throw new BadRequestException('Author already exists');
+
+    throw new InternalServerErrorException(`Error in Author: ${error}`);
   }
 }
