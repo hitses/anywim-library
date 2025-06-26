@@ -28,3 +28,7 @@ export class Loan extends Document {
 }
 
 export const LoanSchema = SchemaFactory.createForClass(Loan);
+
+LoanSchema.index({ book_id: 1, return_date: 1 });
+LoanSchema.index({ person: 1, return_date: 1 });
+LoanSchema.index({ loan_date: -1 });

@@ -4,6 +4,7 @@ import { UpdateLoanDto } from './dto/update-loan.dto';
 
 @Injectable()
 export class LoanService {
+  static LoanSchema: any;
   create(createLoanDto: CreateLoanDto) {
     return 'This action adds a new loan';
   }
