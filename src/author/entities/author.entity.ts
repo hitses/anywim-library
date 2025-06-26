@@ -40,3 +40,6 @@ AuthorSchema.pre('validate', function (next) {
 
   next();
 });
+
+AuthorSchema.index({ fullName: 1 });
+AuthorSchema.index({ createdAt: -1 });
