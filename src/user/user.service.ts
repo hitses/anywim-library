@@ -40,11 +40,7 @@ export class UserService {
   }
 
   async findAll() {
-    try {
-      return await this.userModel.find();
-    } catch (error) {
-      throw new InternalServerErrorException('Error finding users:', error);
-    }
+    return await this.userModel.find();
   }
 
   async findOne(id: string) {
@@ -81,6 +77,13 @@ export class UserService {
   }
 
   async updateIndexes() {
-    await this.userModel.syncIndexes();
+    try {
+      await this.userModel.syncIndexes();
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Error updating user indexes',
+        error,
+      );
+    }
   }
 }

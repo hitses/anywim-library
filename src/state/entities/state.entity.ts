@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
+import slugify from 'slugify';
 
 @Schema({ timestamps: true })
 export class State extends Document {
@@ -11,6 +12,24 @@ export class State extends Document {
     enum: ['available', 'loaned', 'reading'],
   })
   name: string;
+
+  @Prop({
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true,
+  })
+  slug: string;
 }
 
 export const StateSchema = SchemaFactory.createForClass(State);
+
+StateSchema.pre('validate', function (next) {
+  if (this.isModified('name')) {
+    this.slug = slugify(this.name);
+  }
+  next();
+});
+
+StateSchema.index({ name: 1 }, { unique: true });
+StateSchema.index({ slug: 1 }, { unique: true });
