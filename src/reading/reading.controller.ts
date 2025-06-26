@@ -1,11 +1,25 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ReadingService } from './reading.service';
 import { CreateReadingDto } from './dto/create-reading.dto';
 import { UpdateReadingDto } from './dto/update-reading.dto';
+import { Auth } from 'src/auth/decorators/auth.decorator';
 
 @Controller('reading')
 export class ReadingController {
   constructor(private readonly readingService: ReadingService) {}
+
+  @Auth()
+  updateIndexes() {
+    return this.readingService.updateIndexes();
+  }
 
   @Post()
   create(@Body() createReadingDto: CreateReadingDto) {

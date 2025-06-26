@@ -33,3 +33,7 @@ export class Reading extends Document {
 }
 
 export const ReadingSchema = SchemaFactory.createForClass(Reading);
+
+ReadingSchema.index({ user_id: 1, book_id: 1 }, { unique: true });
+ReadingSchema.index({ user_id: 1 });
+ReadingSchema.index({ rating: -1 });

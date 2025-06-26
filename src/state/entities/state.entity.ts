@@ -30,6 +30,3 @@ StateSchema.pre('validate', function (next) {
   }
   next();
 });
-
-StateSchema.index({ name: 1 }, { unique: true });
-StateSchema.index({ slug: 1 }, { unique: true });
