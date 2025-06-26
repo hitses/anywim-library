@@ -31,11 +31,7 @@ export class UserService {
 
       return user;
     } catch (error) {
-      if (error.code === 11000) {
-        throw new BadRequestException('User already exists');
-      }
-
-      throw new InternalServerErrorException('Error creating user', error);
+      this.errorResponse(error);
     }
   }
 
@@ -65,10 +61,7 @@ export class UserService {
         { new: true },
       );
     } catch (error) {
-      if (error.code === 11000)
-        throw new BadRequestException('User already exists');
-
-      throw new InternalServerErrorException('Error updating user', error);
+      this.errorResponse(error);
     }
   }
 
@@ -76,14 +69,10 @@ export class UserService {
     return await this.userModel.findByIdAndDelete(id);
   }
 
-  async updateIndexes() {
-    try {
-      await this.userModel.syncIndexes();
-    } catch (error) {
-      throw new InternalServerErrorException(
-        'Error updating user indexes',
-        error,
-      );
-    }
+  private errorResponse(error: any) {
+    if (error.code === 11000)
+      throw new BadRequestException('User already exists');
+
+    throw new InternalServerErrorException('Error updating user', error);
   }
 }

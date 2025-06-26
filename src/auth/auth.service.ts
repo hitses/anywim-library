@@ -27,7 +27,7 @@ export class AuthService {
     const user = await this.userService.create(registerDto);
 
     try {
-      const token = this.jwtService.sign({ id: user._id });
+      const token = this.jwtService.sign({ id: user!._id });
 
       return {
         user,

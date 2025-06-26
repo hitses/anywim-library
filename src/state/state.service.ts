@@ -25,10 +25,7 @@ export class StateService {
 
       return await state.save();
     } catch (error) {
-      if (error.code === 11000)
-        throw new BadRequestException('State already exists');
-
-      throw new InternalServerErrorException('Error creating state', error);
+      this.errorResponse(error);
     }
   }
 
@@ -52,10 +49,7 @@ export class StateService {
         { new: true },
       );
     } catch (error) {
-      if (error.code === 11000)
-        throw new BadRequestException('State already exists');
-
-      throw new InternalServerErrorException('Error updating state', error);
+      this.errorResponse(error);
     }
   }
 
@@ -63,14 +57,10 @@ export class StateService {
     return await this.stateModel.findByIdAndDelete(id);
   }
 
-  async updateIndexes() {
-    try {
-      await this.stateModel.syncIndexes();
-    } catch (error) {
-      throw new InternalServerErrorException(
-        'Error updating state indexes',
-        error,
-      );
-    }
+  private errorResponse(error: any) {
+    if (error.code === 11000)
+      throw new BadRequestException('State already exists');
+
+    throw new InternalServerErrorException('Error updating state', error);
   }
 }

@@ -18,12 +18,6 @@ export class StateController {
   constructor(private readonly stateService: StateService) {}
 
   @Auth()
-  @Get('update-indexes')
-  updateIndexes() {
-    return this.stateService.updateIndexes();
-  }
-
-  @Auth()
   @Post()
   create(@Body() createStateDto: CreateStateDto) {
     return this.stateService.create(createStateDto);
