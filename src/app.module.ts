@@ -14,6 +14,7 @@ import { CollectionModule } from './collection/collection.module';
 import { LoanModule } from './loan/loan.module';
 import { ReadingModule } from './reading/reading.module';
 import { BookModule } from './book/book.module';
+import { SagaModule } from './saga/saga.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { BookModule } from './book/book.module';
     LoanModule,
     ReadingModule,
     BookModule,
+    SagaModule,
   ],
   controllers: [],
   providers: [],
