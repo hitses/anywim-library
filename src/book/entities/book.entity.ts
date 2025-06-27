@@ -80,18 +80,17 @@ export class Book extends Document {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Collection',
   })
-  collection_id?: mongoose.Types.ObjectId;
+  saga?: mongoose.Types.ObjectId;
 
   @Prop()
-  order_in_collection?: number;
+  order_in_saga?: number;
 }
 
 export const BookSchema = SchemaFactory.createForClass(Book);
 
 BookSchema.pre('validate', function (next) {
-  if (this.isModified('title')) {
+  if (this.isModified('title'))
     this.slug = slugify(this.title, { lower: true, strict: true });
-  }
 
   next();
 });
@@ -101,7 +100,7 @@ BookSchema.index({ state: 1 });
 BookSchema.index({ place: 1 });
 BookSchema.index({ authors: 1 });
 BookSchema.index({ categories: 1 });
-BookSchema.index({ collection_id: 1 });
-BookSchema.index({ collection_id: 1, order_in_collection: 1 });
+BookSchema.index({ saga: 1 });
+BookSchema.index({ saga: 1, order_in_saga: 1 });
 BookSchema.index({ isLoaned: 1 });
 BookSchema.index({ createdAt: -1 });
