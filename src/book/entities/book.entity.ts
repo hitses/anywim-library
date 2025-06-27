@@ -78,7 +78,7 @@ export class Book extends Document {
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Collection',
+    ref: 'Saga',
   })
   saga?: mongoose.Types.ObjectId;
 

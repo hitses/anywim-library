@@ -10,7 +10,6 @@ import { StateModule } from './state/state.module';
 import { PlaceModule } from './place/place.module';
 import { CategoryModule } from './category/category.module';
 import { AuthorModule } from './author/author.module';
-import { CollectionModule } from './collection/collection.module';
 import { LoanModule } from './loan/loan.module';
 import { ReadingModule } from './reading/reading.module';
 import { BookModule } from './book/book.module';
@@ -33,7 +32,6 @@ import { SagaModule } from './saga/saga.module';
     PlaceModule,
     CategoryModule,
     AuthorModule,
-    CollectionModule,
     LoanModule,
     ReadingModule,
     BookModule,

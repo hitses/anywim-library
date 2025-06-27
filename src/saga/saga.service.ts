@@ -1,32 +1,59 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import slugify from 'slugify';
+import { Saga } from './entities/saga.entity';
 import { CreateSagaDto } from './dto/create-saga.dto';
 import { UpdateSagaDto } from './dto/update-saga.dto';
-import { InjectModel } from '@nestjs/mongoose';
+import {
+  createErrorResponse,
+  updateErrorResponse,
+} from 'src/common/methods/errors';
 
 @Injectable()
 export class SagaService {
   constructor(
     @InjectModel(Saga.name)
-    private readonly categoryModel: Model<Collection>,
+    private readonly sagaModel: Model<Saga>,
   ) {}
 
-  create(createSagaDto: CreateSagaDto) {
-    return 'This action adds a new saga';
+  async create(createSagaDto: CreateSagaDto) {
+    try {
+      const saga = new this.sagaModel(createSagaDto);
+
+      return await saga.save();
+    } catch (error) {
+      createErrorResponse('Saga', error);
+    }
   }
 
-  findAll() {
-    return `This action returns all saga`;
+  async findAll() {
+    return await this.sagaModel.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} saga`;
+  async findOne(id: string) {
+    const saga = await this.sagaModel.findById(id);
+
+    if (!saga) throw new Error('Saga not found');
+
+    return saga;
   }
 
-  update(id: number, updateSagaDto: UpdateSagaDto) {
-    return `This action updates a #${id} saga`;
+  async update(id: string, updateSagaDto: UpdateSagaDto) {
+    const slug = slugify(updateSagaDto.name!);
+
+    try {
+      return await this.sagaModel.findOneAndUpdate(
+        { _id: id },
+        { ...updateSagaDto, slug },
+        { new: true },
+      );
+    } catch (error) {
+      updateErrorResponse('Saga', error);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} saga`;
+  async remove(id: string) {
+    return await this.sagaModel.findByIdAndDelete(id);
   }
 }
