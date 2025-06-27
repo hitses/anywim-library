@@ -1,15 +1,14 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import slugify from 'slugify';
 import { State } from './entities/state.entity';
 import { CreateStateDto } from './dto/create-state.dto';
 import { UpdateStateDto } from './dto/update-state.dto';
-import slugify from 'slugify';
+import {
+  createErrorResponse,
+  updateErrorResponse,
+} from 'src/common/methods/errors';
 
 @Injectable()
 export class StateService {
@@ -24,7 +23,7 @@ export class StateService {
 
       return await state.save();
     } catch (error) {
-      this.errorResponse(error);
+      createErrorResponse('State', error);
     }
   }
 
@@ -50,18 +49,11 @@ export class StateService {
         { new: true },
       );
     } catch (error) {
-      this.errorResponse(error);
+      updateErrorResponse('State', error);
     }
   }
 
   async remove(id: string) {
     return await this.stateModel.findByIdAndDelete(id);
-  }
-
-  private errorResponse(error: any) {
-    if (error.code === 11000)
-      throw new BadRequestException('State already exists');
-
-    throw new InternalServerErrorException('Error in State', error);
   }
 }
