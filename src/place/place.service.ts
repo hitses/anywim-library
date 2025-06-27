@@ -1,15 +1,14 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Place } from './entities/place.entity';
 import { CreatePlaceDto } from './dto/create-place.dto';
 import { UpdatePlaceDto } from './dto/update-place.dto';
 import slugify from 'slugify';
-import { createErrorResponse } from 'src/common/methods/errors';
+import {
+  createErrorResponse,
+  updateErrorResponse,
+} from 'src/common/methods/errors';
 
 @Injectable()
 export class PlaceService {
@@ -50,18 +49,11 @@ export class PlaceService {
         { new: true },
       );
     } catch (error) {
-      this.errorResponse(error);
+      updateErrorResponse('Place', error);
     }
   }
 
   async remove(id: string) {
     return await this.placeModel.findByIdAndDelete(id);
-  }
-
-  private errorResponse(error: any) {
-    if (error.code === 11000)
-      throw new BadRequestException('Place already exists');
-
-    throw new InternalServerErrorException(`Error in Place: ${error}`);
   }
 }
