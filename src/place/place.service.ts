@@ -9,6 +9,7 @@ import { Place } from './entities/place.entity';
 import { CreatePlaceDto } from './dto/create-place.dto';
 import { UpdatePlaceDto } from './dto/update-place.dto';
 import slugify from 'slugify';
+import { createErrorResponse } from 'src/common/methods/errors';
 
 @Injectable()
 export class PlaceService {
@@ -23,7 +24,7 @@ export class PlaceService {
 
       return await place.save();
     } catch (error) {
-      this.errorResponse(error);
+      createErrorResponse('Place', error);
     }
   }
 
