@@ -1,15 +1,14 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import slugify from 'slugify';
 import { Author } from './entities/author.entity';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
-import slugify from 'slugify';
+import {
+  createErrorResponse,
+  updateErrorResponse,
+} from 'src/common/methods/errors';
 
 @Injectable()
 export class AuthorService {
@@ -24,7 +23,7 @@ export class AuthorService {
 
       return await author.save();
     } catch (error) {
-      this.errorResponse(error);
+      createErrorResponse('Author', error);
     }
   }
 
@@ -52,18 +51,11 @@ export class AuthorService {
         { new: true },
       );
     } catch (error) {
-      this.errorResponse(error);
+      updateErrorResponse('Author', error);
     }
   }
 
   async remove(id: string) {
     return await this.authorModel.findByIdAndDelete(id);
-  }
-
-  private errorResponse(error: any) {
-    if (error.code === 11000)
-      throw new BadRequestException('Author already exists');
-
-    throw new InternalServerErrorException(`Error in Author: ${error}`);
   }
 }
