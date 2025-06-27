@@ -1,9 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -11,6 +6,10 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { Bcrypt } from 'src/common/services/bcrypt';
+import {
+  createErrorResponse,
+  updateErrorResponse,
+} from 'src/common/methods/errors';
 
 @Injectable()
 export class UserService {
@@ -31,7 +30,7 @@ export class UserService {
 
       return user;
     } catch (error) {
-      this.errorResponse(error);
+      createErrorResponse('User', error);
     }
   }
 
@@ -61,18 +60,11 @@ export class UserService {
         { new: true },
       );
     } catch (error) {
-      this.errorResponse(error);
+      updateErrorResponse('User', error);
     }
   }
 
   async remove(id: string) {
     return await this.userModel.findByIdAndDelete(id);
-  }
-
-  private errorResponse(error: any) {
-    if (error.code === 11000)
-      throw new BadRequestException('User already exists');
-
-    throw new InternalServerErrorException('Error in User', error);
   }
 }
