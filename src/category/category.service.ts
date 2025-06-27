@@ -1,15 +1,14 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import slugify from 'slugify';
 import { Category } from './entities/category.entity';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import slugify from 'slugify';
+import {
+  createErrorResponse,
+  updateErrorResponse,
+} from 'src/common/methods/errors';
 
 @Injectable()
 export class CategoryService {
@@ -24,7 +23,7 @@ export class CategoryService {
 
       return await category.save();
     } catch (error) {
-      this.errorResponse(error);
+      createErrorResponse('Category', error);
     }
   }
 
@@ -50,18 +49,11 @@ export class CategoryService {
         { new: true },
       );
     } catch (error) {
-      this.errorResponse(error);
+      updateErrorResponse('Category', error);
     }
   }
 
   async remove(id: string) {
     return await this.categoryModel.findByIdAndDelete(id);
-  }
-
-  private errorResponse(error: any) {
-    if (error.code === 11000)
-      throw new BadRequestException('Category already exists');
-
-    throw new InternalServerErrorException('Error in Category', error);
   }
 }

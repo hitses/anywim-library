@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import slugify from 'slugify';
 import { Place } from './entities/place.entity';
 import { CreatePlaceDto } from './dto/create-place.dto';
 import { UpdatePlaceDto } from './dto/update-place.dto';
-import slugify from 'slugify';
 import {
   createErrorResponse,
   updateErrorResponse,
