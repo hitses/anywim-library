@@ -5,4 +5,8 @@ export class CreateCategoryDto {
   @IsString()
   @Transform(({ value }) => value.toLowerCase().trim())
   name: string;
+
+  @IsString()
+  @Transform(({ value }) => value.toLowerCase().trim())
+  code: string;
 }

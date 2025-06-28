@@ -7,6 +7,20 @@ import {
   ValidationArguments,
 } from 'class-validator';
 
+// Ejemplos de ISBN-10 válidos
+// 0306406152
+// 043942089X
+// 048665088X
+// 0140449132
+// 0061120081
+
+// Ejemplos de ISBN-13 válidos
+// 9780306406157
+// 9780439420891
+// 9780486650883
+// 9780140449136
+// 9780061120084
+
 export class ISBNValidator {
   // Normaliza el ISBN eliminando espacios y guiones
   static normalize(isbn: string): string {

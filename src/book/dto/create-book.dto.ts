@@ -16,12 +16,6 @@ import { IsValidIsbn } from 'src/common/validators/isbn';
 
 export class CreateBookDto {
   @IsNotEmpty()
-  @IsNumber()
-  @IsPositive()
-  @IsInt()
-  code: number;
-
-  @IsNotEmpty()
   @IsValidIsbn({
     message: 'The ISBN is invalid. Must be a correct ISBN-10 or ISBN-13.',
   })

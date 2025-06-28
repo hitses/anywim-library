@@ -20,6 +20,11 @@ export class Category extends Document {
     trim: true,
   })
   slug: string;
+
+  @Prop({
+    required: true,
+  })
+  code: string;
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);
