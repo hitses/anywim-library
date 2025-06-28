@@ -1,9 +1,10 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Reading } from './entities/reading.entity';
 import { CreateReadingDto } from './dto/create-reading.dto';
 import { UpdateReadingDto } from './dto/update-reading.dto';
+import { createErrorResponse } from 'src/common/methods/errors';
 
 @Injectable()
 export class ReadingService {
@@ -12,34 +13,44 @@ export class ReadingService {
     private readonly readingModel: Model<Reading>,
   ) {}
 
-  create(createReadingDto: CreateReadingDto) {
-    return 'This action adds a new reading';
-  }
-
-  findAll() {
-    return `This action returns all reading`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} reading`;
-  }
-
-  update(id: number, updateReadingDto: UpdateReadingDto) {
-    return `This action updates a #${id} reading`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} reading`;
-  }
-
-  async updateIndexes() {
+  async create(createReadingDto: CreateReadingDto) {
     try {
-      await this.readingModel.syncIndexes();
+      const reading = new this.readingModel(createReadingDto);
+
+      return await reading.save();
     } catch (error) {
-      throw new InternalServerErrorException(
-        'Error updating reading indexes',
-        error,
-      );
+      createErrorResponse('Reading', error);
     }
+  }
+
+  async findAll() {
+    return await this.readingModel.find();
+  }
+
+  async findOne(id: string) {
+    const reading = await this.readingModel.findById(id);
+
+    if (!reading) throw new NotFoundException('Reading not found');
+
+    return reading;
+  }
+
+  async update(id: string, updateReadingDto: UpdateReadingDto) {
+    delete updateReadingDto.user;
+    delete updateReadingDto.book;
+
+    try {
+      return await this.readingModel.findOneAndUpdate(
+        { _id: id },
+        { ...updateReadingDto },
+        { new: true },
+      );
+    } catch (error) {
+      createErrorResponse('Reading', error);
+    }
+  }
+
+  async remove(id: string) {
+    return await this.readingModel.findByIdAndDelete(id);
   }
 }

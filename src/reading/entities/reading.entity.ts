@@ -10,14 +10,14 @@ export class Reading extends Document {
     ref: 'User',
     required: true,
   })
-  user_id: mongoose.Types.ObjectId;
+  user: mongoose.Types.ObjectId;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Book',
     required: true,
   })
-  book_id: mongoose.Types.ObjectId;
+  book: mongoose.Types.ObjectId;
 
   @Prop()
   date?: Date;
