@@ -8,7 +8,10 @@ import { ClientSession, Model } from 'mongoose';
 import { Loan } from './entities/loan.entity';
 import { CreateLoanDto } from './dto/create-loan.dto';
 import { UpdateLoanDto } from './dto/update-loan.dto';
-import { createErrorResponse } from 'src/common/methods/errors';
+import {
+  createErrorResponse,
+  updateErrorResponse,
+} from 'src/common/methods/errors';
 import { BookService } from 'src/book/book.service';
 import { State } from 'src/state/entities/state.entity';
 import { StateService } from 'src/state/state.service';
@@ -39,7 +42,6 @@ export class LoanService {
 
       const updatedBook = await this.bookService.changeBookState(
         createLoanDto.book,
-        availableState,
         loanedState,
         session,
       );
@@ -73,14 +75,76 @@ export class LoanService {
   }
 
   async findOne(id: string) {
-    return `This action returns a #${id} loan`;
+    const loan = await this.loanModel.findById(id);
+
+    if (!loan) throw new NotFoundException('Loan not found');
+
+    return loan;
   }
 
   async update(id: string, updateLoanDto: UpdateLoanDto) {
-    return `This action updates a #${id} loan`;
+    const session: ClientSession = await this.loanModel.db.startSession();
+    session.startTransaction();
+
+    try {
+      const states: State[] = await this.stateService.findAll();
+
+      if (states.length <= 0) throw new NotFoundException('States not found');
+
+      const loanedState = states.find((s) => s.name === 'loaned');
+      if (!loanedState) throw new NotFoundException("State 'loaned' not found");
+      const availableState = states.find((s) => s.name === 'available');
+      if (!availableState)
+        throw new NotFoundException("State 'available' not found");
+
+      const book = await this.bookService.findOne(updateLoanDto.book!);
+      if (!book) throw new NotFoundException('Book not found');
+
+      let newState: State | null = null;
+
+      if (book.state.equals(availableState._id)) {
+        newState = loanedState;
+      } else if (book.state.equals(loanedState._id)) {
+        newState = availableState;
+      } else {
+        throw new BadRequestException(
+          `Book state must be either 'available' or 'loaned' to update`,
+        );
+      }
+
+      const updatedBook = await this.bookService.changeBookState(
+        updateLoanDto.book!,
+        newState,
+        session,
+      );
+
+      if (!updatedBook) {
+        throw new BadRequestException(
+          'Book state change failed — it may not be in the expected state',
+        );
+      }
+
+      const updatedLoan = await this.loanModel.findByIdAndUpdate(
+        id,
+        {
+          return_date: new Date(),
+        },
+        { new: true, session },
+      );
+
+      await session.commitTransaction();
+
+      return updatedLoan;
+    } catch (error) {
+      await session.abortTransaction();
+
+      updateErrorResponse('Loan', error);
+    } finally {
+      await session.endSession();
+    }
   }
 
   async remove(id: string) {
-    return `This action removes a #${id} loan`;
+    return this.loanModel.findByIdAndDelete(id);
   }
 }

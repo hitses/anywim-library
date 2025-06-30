@@ -73,16 +73,11 @@ export class BookService {
     return await this.bookModel.findByIdAndDelete(id);
   }
 
-  async changeBookState(
-    id: string,
-    availableState: State,
-    loanedState: State,
-    session: ClientSession,
-  ) {
+  async changeBookState(id: string, newState: State, session: ClientSession) {
     try {
       return await this.bookModel.findOneAndUpdate(
-        { _id: id, state: availableState._id },
-        { state: loanedState._id },
+        { _id: id },
+        { state: newState._id },
         { new: true, session },
       );
     } catch (error) {
