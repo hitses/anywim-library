@@ -4,6 +4,7 @@ import { BookController } from './book.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Book, BookSchema } from './entities/book.entity';
 import { Counter, CounterSchema } from './entities/counter.entity';
+import { StateModule } from 'src/state/state.module';
 
 @Module({
   controllers: [BookController],
@@ -13,6 +14,8 @@ import { Counter, CounterSchema } from './entities/counter.entity';
       { name: Book.name, schema: BookSchema },
       { name: Counter.name, schema: CounterSchema },
     ]),
+    StateModule,
   ],
+  exports: [BookService],
 })
 export class BookModule {}

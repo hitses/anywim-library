@@ -39,6 +39,14 @@ export class StateService {
     return state;
   }
 
+  async findOneByName(name: string) {
+    const state = await this.stateModel.findOne({ name });
+
+    if (!state) throw new NotFoundException('State not found');
+
+    return state;
+  }
+
   async update(id: string, updateStateDto: UpdateStateDto) {
     const slug = slugify(updateStateDto.name!);
 

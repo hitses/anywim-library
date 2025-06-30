@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { ClientSession, Model } from 'mongoose';
 import { Book } from './entities/book.entity';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
@@ -10,6 +10,7 @@ import {
 } from 'src/common/methods/errors';
 import { Counter } from './entities/counter.entity';
 import slugify from 'slugify';
+import { State } from 'src/state/entities/state.entity';
 
 @Injectable()
 export class BookService {
@@ -43,7 +44,9 @@ export class BookService {
   }
 
   async findOne(id: string) {
-    const book = await this.bookModel.findById(id);
+    const book = await this.bookModel
+      .findById(id)
+      .populate('state place authors categories');
 
     if (!book) throw new NotFoundException('Book not found');
 
@@ -51,14 +54,16 @@ export class BookService {
   }
 
   async update(id: string, updateBookDto: UpdateBookDto) {
-    const slug = slugify(updateBookDto.title!);
-
     try {
-      return await this.bookModel.findOneAndUpdate(
-        { _id: id },
-        { ...updateBookDto, slug },
-        { new: true },
-      );
+      const updateData: UpdateBookDto = { ...updateBookDto };
+
+      if (updateBookDto.title) {
+        updateData.slug = slugify(updateBookDto.title);
+      }
+
+      return await this.bookModel.findOneAndUpdate({ _id: id }, updateData, {
+        new: true,
+      });
     } catch (error) {
       updateErrorResponse('Book', error);
     }
@@ -66,6 +71,23 @@ export class BookService {
 
   async remove(id: string) {
     return await this.bookModel.findByIdAndDelete(id);
+  }
+
+  async changeBookState(
+    id: string,
+    availableState: State,
+    loanedState: State,
+    session: ClientSession,
+  ) {
+    try {
+      return await this.bookModel.findOneAndUpdate(
+        { _id: id, state: availableState._id },
+        { state: loanedState._id },
+        { new: true, session },
+      );
+    } catch (error) {
+      updateErrorResponse('Book', error);
+    }
   }
 
   private async getNextBookCode(): Promise<number> {
