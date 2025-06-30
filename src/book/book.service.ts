@@ -40,7 +40,9 @@ export class BookService {
   }
 
   async findAll() {
-    return await this.bookModel.find();
+    return await this.bookModel
+      .find()
+      .populate('state place authors categories');
   }
 
   async findOne(id: string) {
