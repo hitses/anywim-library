@@ -8,7 +8,7 @@ import { UpdateSagaDto } from './dto/update-saga.dto';
 import {
   createErrorResponse,
   updateErrorResponse,
-} from 'src/common/methods/errors';
+} from 'src/_core/common/methods/errors';
 
 @Injectable()
 export class SagaService {

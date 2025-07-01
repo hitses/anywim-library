@@ -10,8 +10,8 @@ import {
 import { PlaceService } from './place.service';
 import { CreatePlaceDto } from './dto/create-place.dto';
 import { UpdatePlaceDto } from './dto/update-place.dto';
-import { Auth } from 'src/auth/decorators/auth.decorator';
-import { MongoIdPipe } from 'src/config/pipes/mongo-id.pipe';
+import { Auth } from 'src/_core/auth/decorators/auth.decorator';
+import { MongoIdPipe } from 'src/_core/config/pipes/mongo-id.pipe';
 
 @Controller('place')
 export class PlaceController {

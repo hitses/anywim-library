@@ -8,7 +8,7 @@ import { Model } from 'mongoose';
 import { RegisterDto } from './dto/register.dto';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
-import { Bcrypt } from 'src/common/services/bcrypt';
+import { Bcrypt } from 'src/_core/common/services/bcrypt';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';

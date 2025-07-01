@@ -12,7 +12,7 @@ import {
   Min,
   ValidateIf,
 } from 'class-validator';
-import { IsValidIsbn } from 'src/common/validators/isbn';
+import { IsValidIsbn } from 'src/_core/common/validators/isbn';
 
 export class CreateBookDto {
   @IsNotEmpty()

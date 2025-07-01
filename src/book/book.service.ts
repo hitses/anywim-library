@@ -7,7 +7,7 @@ import { UpdateBookDto } from './dto/update-book.dto';
 import {
   createErrorResponse,
   updateErrorResponse,
-} from 'src/common/methods/errors';
+} from 'src/_core/common/methods/errors';
 import { Counter } from './entities/counter.entity';
 import slugify from 'slugify';
 import { State } from 'src/state/entities/state.entity';

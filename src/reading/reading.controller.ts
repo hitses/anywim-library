@@ -10,8 +10,8 @@ import {
 import { ReadingService } from './reading.service';
 import { CreateReadingDto } from './dto/create-reading.dto';
 import { UpdateReadingDto } from './dto/update-reading.dto';
-import { Auth } from 'src/auth/decorators/auth.decorator';
-import { MongoIdPipe } from 'src/config/pipes/mongo-id.pipe';
+import { Auth } from 'src/_core/auth/decorators/auth.decorator';
+import { MongoIdPipe } from 'src/_core/config/pipes/mongo-id.pipe';
 
 @Controller('reading')
 export class ReadingController {

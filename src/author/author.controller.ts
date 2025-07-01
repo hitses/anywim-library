@@ -10,8 +10,8 @@ import {
 import { AuthorService } from './author.service';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
-import { MongoIdPipe } from 'src/config/pipes/mongo-id.pipe';
-import { Auth } from 'src/auth/decorators/auth.decorator';
+import { MongoIdPipe } from 'src/_core/config/pipes/mongo-id.pipe';
+import { Auth } from 'src/_core/auth/decorators/auth.decorator';
 
 @Controller('author')
 export class AuthorController {

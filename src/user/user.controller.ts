@@ -9,8 +9,8 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { MongoIdPipe } from 'src/config/pipes/mongo-id.pipe';
-import { Auth } from 'src/auth/decorators/auth.decorator';
+import { MongoIdPipe } from 'src/_core/config/pipes/mongo-id.pipe';
+import { Auth } from 'src/_core/auth/decorators/auth.decorator';
 import { UserService } from './user.service';
 
 @Controller('users')

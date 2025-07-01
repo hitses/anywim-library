@@ -4,11 +4,11 @@ import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-import { Bcrypt } from 'src/common/services/bcrypt';
+import { Bcrypt } from 'src/_core/common/services/bcrypt';
 import {
   createErrorResponse,
   updateErrorResponse,
-} from 'src/common/methods/errors';
+} from 'src/_core/common/methods/errors';
 
 @Injectable()
 export class UserService {

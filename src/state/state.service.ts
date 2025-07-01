@@ -8,7 +8,7 @@ import { UpdateStateDto } from './dto/update-state.dto';
 import {
   createErrorResponse,
   updateErrorResponse,
-} from 'src/common/methods/errors';
+} from 'src/_core/common/methods/errors';
 
 @Injectable()
 export class StateService {

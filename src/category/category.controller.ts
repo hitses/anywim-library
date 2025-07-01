@@ -10,8 +10,8 @@ import {
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import { MongoIdPipe } from 'src/config/pipes/mongo-id.pipe';
-import { Auth } from 'src/auth/decorators/auth.decorator';
+import { MongoIdPipe } from 'src/_core/config/pipes/mongo-id.pipe';
+import { Auth } from 'src/_core/auth/decorators/auth.decorator';
 
 @Controller('category')
 export class CategoryController {

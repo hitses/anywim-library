@@ -10,8 +10,8 @@ import {
 import { SagaService } from './saga.service';
 import { CreateSagaDto } from './dto/create-saga.dto';
 import { UpdateSagaDto } from './dto/update-saga.dto';
-import { Auth } from 'src/auth/decorators/auth.decorator';
-import { MongoIdPipe } from 'src/config/pipes/mongo-id.pipe';
+import { Auth } from 'src/_core/auth/decorators/auth.decorator';
+import { MongoIdPipe } from 'src/_core/config/pipes/mongo-id.pipe';
 
 @Controller('saga')
 export class SagaController {

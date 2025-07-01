@@ -11,7 +11,7 @@ import { UpdateLoanDto } from './dto/update-loan.dto';
 import {
   createErrorResponse,
   updateErrorResponse,
-} from 'src/common/methods/errors';
+} from 'src/_core/common/methods/errors';
 import { BookService } from 'src/book/book.service';
 import { State } from 'src/state/entities/state.entity';
 import { StateService } from 'src/state/state.service';

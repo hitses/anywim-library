@@ -10,8 +10,8 @@ import {
 import { LoanService } from './loan.service';
 import { CreateLoanDto } from './dto/create-loan.dto';
 import { UpdateLoanDto } from './dto/update-loan.dto';
-import { Auth } from 'src/auth/decorators/auth.decorator';
-import { MongoIdPipe } from 'src/config/pipes/mongo-id.pipe';
+import { Auth } from 'src/_core/auth/decorators/auth.decorator';
+import { MongoIdPipe } from 'src/_core/config/pipes/mongo-id.pipe';
 
 @Controller('loan')
 export class LoanController {

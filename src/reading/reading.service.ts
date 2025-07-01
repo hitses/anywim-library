@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { Reading } from './entities/reading.entity';
 import { CreateReadingDto } from './dto/create-reading.dto';
 import { UpdateReadingDto } from './dto/update-reading.dto';
-import { createErrorResponse } from 'src/common/methods/errors';
+import { createErrorResponse } from 'src/_core/common/methods/errors';
 
 @Injectable()
 export class ReadingService {

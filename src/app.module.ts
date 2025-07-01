@@ -1,11 +1,11 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { JoiValidationSchema } from './config/joi.validation';
-import { LoggerMiddleware } from './middlewares/logger.middleware';
-import { CommonModule } from './common/common.module';
+import { JoiValidationSchema } from './_core/config/joi.validation';
+import { LoggerMiddleware } from './_core/middlewares/logger.middleware';
+import { CommonModule } from './_core/common/common.module';
 import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './_core/auth/auth.module';
 import { StateModule } from './state/state.module';
 import { PlaceModule } from './place/place.module';
 import { CategoryModule } from './category/category.module';

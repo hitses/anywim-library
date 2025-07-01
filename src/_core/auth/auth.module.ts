@@ -6,7 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
-import { CommonModule } from 'src/common/common.module';
+import { CommonModule } from 'src/_core/common/common.module';
 import { UserModule } from 'src/user/user.module';
 import { User, UserSchema } from 'src/user/entities/user.entity';
 

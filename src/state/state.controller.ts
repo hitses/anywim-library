@@ -10,8 +10,8 @@ import {
 import { StateService } from './state.service';
 import { CreateStateDto } from './dto/create-state.dto';
 import { UpdateStateDto } from './dto/update-state.dto';
-import { MongoIdPipe } from 'src/config/pipes/mongo-id.pipe';
-import { Auth } from 'src/auth/decorators/auth.decorator';
+import { MongoIdPipe } from 'src/_core/config/pipes/mongo-id.pipe';
+import { Auth } from 'src/_core/auth/decorators/auth.decorator';
 
 @Controller('state')
 export class StateController {
